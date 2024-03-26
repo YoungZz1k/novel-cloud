@@ -143,20 +143,20 @@ public class SearchServiceImpl implements SearchService {
                 );
             }
 
-            // 小说类别
-            if (Objects.nonNull(condition.getCategoryId())) {
-                b.must(TermQuery.of(f -> f
-                                .field(EsConsts.BookIndex.FIELD_CATEGORY_ID)
-                                .value(condition.getCategoryId())
-                        )._toQuery()
-                );
-            }
-
             // 完结状态
             if (Objects.nonNull(condition.getBookStatus())) {
                 b.must(TermQuery.of(f -> f
                                 .field(EsConsts.BookIndex.FIELD_BOOK_STATUS)
                                 .value(condition.getBookStatus())
+                        )._toQuery()
+                );
+            }
+
+            // 小说类别
+            if (Objects.nonNull(condition.getCategoryId())) {
+                b.must(TermQuery.of(f -> f
+                                .field(EsConsts.BookIndex.FIELD_CATEGORY_ID)
+                                .value(condition.getCategoryId())
                         )._toQuery()
                 );
             }

@@ -1,17 +1,14 @@
 package io.github.xxyopen.novel.book.feign;
 
 import io.github.xxyopen.novel.book.dto.req.*;
-import io.github.xxyopen.novel.book.dto.resp.BookChapterRespDto;
-import io.github.xxyopen.novel.book.dto.resp.BookEsRespDto;
-import io.github.xxyopen.novel.book.dto.resp.BookInfoRespDto;
+import io.github.xxyopen.novel.book.dto.resp.*;
 import io.github.xxyopen.novel.common.constant.ApiRouterConsts;
 import io.github.xxyopen.novel.common.constant.ErrorCodeEnum;
 import io.github.xxyopen.novel.common.resp.PageRespDto;
 import io.github.xxyopen.novel.common.resp.RestResp;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +77,18 @@ public interface BookFeign {
     @PostMapping(ApiRouterConsts.API_INNER_BOOK_URL_PREFIX + "/listPublishBookChapters")
     RestResp<PageRespDto<BookChapterRespDto>> listPublishBookChapters(ChapterPageReqDto dto);
 
+    /**
+     * 小说章节修改查询接口
+     */
+    @GetMapping(ApiRouterConsts.API_INNER_BOOK_URL_PREFIX + "/chapter/{chapterId}")
+    RestResp<UpdateBookChapterRspDto> getChapter(@PathVariable("chapterId") Long chapterId);
+
+    /**
+     * 小说章节修改接口
+     */
+    @PutMapping(ApiRouterConsts.API_INNER_BOOK_URL_PREFIX + "/chapter/{chapterId}")
+    RestResp<Void> updateBookChapter(@PathVariable("chapterId")Long chapterId,@RequestBody UpdateBookChapterReqDto updateBookChapterReqDto);
+
     @Component
     class BookFeignFallback implements BookFeign {
 
@@ -126,6 +135,17 @@ public interface BookFeign {
         @Override
         public RestResp<PageRespDto<BookChapterRespDto>> listPublishBookChapters(ChapterPageReqDto dto) {
             return RestResp.ok(PageRespDto.of(dto.getPageNum(), dto.getPageSize(), 0, new ArrayList<>(0)));
+        }
+
+        @Override
+        public RestResp<UpdateBookChapterRspDto> getChapter(Long chapterId) {
+            return RestResp.ok(null);
+        }
+
+
+        @Override
+        public RestResp<Void> updateBookChapter(Long chapterId, UpdateBookChapterReqDto updateBookChapterReqDto) {
+            return RestResp.fail(ErrorCodeEnum.THIRD_SERVICE_ERROR);
         }
     }
 

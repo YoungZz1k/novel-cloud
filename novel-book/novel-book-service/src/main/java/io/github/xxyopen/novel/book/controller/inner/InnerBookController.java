@@ -1,9 +1,7 @@
 package io.github.xxyopen.novel.book.controller.inner;
 
 import io.github.xxyopen.novel.book.dto.req.*;
-import io.github.xxyopen.novel.book.dto.resp.BookChapterRespDto;
-import io.github.xxyopen.novel.book.dto.resp.BookEsRespDto;
-import io.github.xxyopen.novel.book.dto.resp.BookInfoRespDto;
+import io.github.xxyopen.novel.book.dto.resp.*;
 import io.github.xxyopen.novel.book.service.BookService;
 import io.github.xxyopen.novel.common.constant.ApiRouterConsts;
 import io.github.xxyopen.novel.common.resp.PageRespDto;
@@ -110,6 +108,18 @@ public class InnerBookController {
     @PostMapping("listPublishBookChapters")
     public RestResp<PageRespDto<BookChapterRespDto>> listPublishBookChapters(@RequestBody ChapterPageReqDto dto) {
         return bookService.listBookChapters(dto);
+    }
+
+    @GetMapping("chapter/{chapterId}")
+    @Operation(summary = "小说章节修改查询接口")
+    public RestResp<UpdateBookChapterRspDto> getChapter(@PathVariable("chapterId") Long chapterId){
+        return bookService.getChapter(chapterId);
+    }
+
+    @PutMapping("/chapter/{chapterId}")
+    @Operation(summary = "小说章节修改接口")
+    public RestResp<Void> updateBookChapter(@PathVariable("chapterId") Long chapterId,@RequestBody UpdateBookChapterReqDto updateBookChapterReqDto){
+        return bookService.updateBookChapter(chapterId,updateBookChapterReqDto);
     }
 
 }

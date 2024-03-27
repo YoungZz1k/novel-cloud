@@ -1,5 +1,6 @@
 package io.github.xxyopen.novel.book.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -100,7 +101,7 @@ public class BookServiceImpl implements BookService {
 
         // 查询最新章节信息
         BookChapterRespDto bookChapter = bookChapterCacheManager.getChapter(
-            bookInfo.getLastChapterId());
+                bookInfo.getLastChapterId());
 
         // 查询章节内容
         String content = bookContentCacheManager.getBookContent(bookInfo.getLastChapterId());
@@ -112,15 +113,15 @@ public class BookServiceImpl implements BookService {
 
         // 组装数据并返回
         return RestResp.ok(BookChapterAboutRespDto.builder()
-            .chapterInfo(bookChapter)
-            .chapterTotal(chapterTotal)
-            .contentSummary(content.substring(0, 30))
-            .build());
+                .chapterInfo(bookChapter)
+                .chapterTotal(chapterTotal)
+                .contentSummary(content.substring(0, 30))
+                .build());
     }
 
     @Override
     public RestResp<List<BookInfoRespDto>> listRecBooks(Long bookId)
-        throws NoSuchAlgorithmException {
+            throws NoSuchAlgorithmException {
         Long categoryId = bookInfoCacheManager.getBookInfo(bookId).getCategoryId();
         List<Long> lastUpdateIdList = bookInfoCacheManager.getLastUpdateIdList(categoryId);
         List<BookInfoRespDto> respDtoList = new ArrayList<>();
@@ -156,13 +157,13 @@ public class BookServiceImpl implements BookService {
         // 查询上一章信息并返回章节ID
         QueryWrapper<BookChapter> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.BookChapterTable.COLUMN_BOOK_ID, bookId)
-            .lt(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM, chapterNum)
-            .orderByDesc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM)
-            .last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
+                .lt(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM, chapterNum)
+                .orderByDesc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM)
+                .last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
         return RestResp.ok(
-            Optional.ofNullable(bookChapterMapper.selectOne(queryWrapper))
-                .map(BookChapter::getId)
-                .orElse(null)
+                Optional.ofNullable(bookChapterMapper.selectOne(queryWrapper))
+                        .map(BookChapter::getId)
+                        .orElse(null)
         );
     }
 
@@ -176,13 +177,13 @@ public class BookServiceImpl implements BookService {
         // 查询下一章信息并返回章节ID
         QueryWrapper<BookChapter> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.BookChapterTable.COLUMN_BOOK_ID, bookId)
-            .gt(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM, chapterNum)
-            .orderByAsc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM)
-            .last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
+                .gt(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM, chapterNum)
+                .orderByAsc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM)
+                .last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
         return RestResp.ok(
-            Optional.ofNullable(bookChapterMapper.selectOne(queryWrapper))
-                .map(BookChapter::getId)
-                .orElse(null)
+                Optional.ofNullable(bookChapterMapper.selectOne(queryWrapper))
+                        .map(BookChapter::getId)
+                        .orElse(null)
         );
     }
 
@@ -190,13 +191,13 @@ public class BookServiceImpl implements BookService {
     public RestResp<List<BookChapterRespDto>> listChapters(Long bookId) {
         QueryWrapper<BookChapter> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.BookChapterTable.COLUMN_BOOK_ID, bookId)
-            .orderByAsc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM);
+                .orderByAsc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM);
         return RestResp.ok(bookChapterMapper.selectList(queryWrapper).stream()
-            .map(v -> BookChapterRespDto.builder()
-                .id(v.getId())
-                .chapterName(v.getChapterName())
-                .isVip(v.getIsVip())
-                .build()).toList());
+                .map(v -> BookChapterRespDto.builder()
+                        .id(v.getId())
+                        .chapterName(v.getChapterName())
+                        .isVip(v.getIsVip())
+                        .build()).toList());
     }
 
     @Override
@@ -207,11 +208,11 @@ public class BookServiceImpl implements BookService {
     @Lock(prefix = "userComment")
     @Override
     public RestResp<Void> saveComment(
-        @Key(expr = "#{userId + '::' + bookId}") BookCommentReqDto dto) {
+            @Key(expr = "#{userId + '::' + bookId}") BookCommentReqDto dto) {
         // 校验用户是否已发表评论
         QueryWrapper<BookComment> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.BookCommentTable.COLUMN_USER_ID, dto.getUserId())
-            .eq(DatabaseConsts.BookCommentTable.COLUMN_BOOK_ID, dto.getBookId());
+                .eq(DatabaseConsts.BookCommentTable.COLUMN_BOOK_ID, dto.getBookId());
         if (bookCommentMapper.selectCount(queryWrapper) > 0) {
             // 用户已发表评论
             return RestResp.fail(ErrorCodeEnum.USER_COMMENTED);
@@ -233,29 +234,29 @@ public class BookServiceImpl implements BookService {
         commentCountQueryWrapper.eq(DatabaseConsts.BookCommentTable.COLUMN_BOOK_ID, bookId);
         Long commentTotal = bookCommentMapper.selectCount(commentCountQueryWrapper);
         BookCommentRespDto bookCommentRespDto = BookCommentRespDto.builder()
-            .commentTotal(commentTotal).build();
+                .commentTotal(commentTotal).build();
         if (commentTotal > 0) {
 
             // 查询最新的评论列表
             QueryWrapper<BookComment> commentQueryWrapper = new QueryWrapper<>();
             commentQueryWrapper.eq(DatabaseConsts.BookCommentTable.COLUMN_BOOK_ID, bookId)
-                .orderByDesc(DatabaseConsts.CommonColumnEnum.CREATE_TIME.getName())
-                .last(DatabaseConsts.SqlEnum.LIMIT_5.getSql());
+                    .orderByDesc(DatabaseConsts.CommonColumnEnum.CREATE_TIME.getName())
+                    .last(DatabaseConsts.SqlEnum.LIMIT_5.getSql());
             List<BookComment> bookComments = bookCommentMapper.selectList(commentQueryWrapper);
 
             // 查询评论用户信息，并设置需要返回的评论用户名
             List<Long> userIds = bookComments.stream().map(BookComment::getUserId).toList();
             List<UserInfoRespDto> userInfos = userFeignManager.listUserInfoByIds(userIds);
             Map<Long, UserInfoRespDto> userInfoMap = userInfos.stream()
-                .collect(Collectors.toMap(UserInfoRespDto::getId, Function.identity()));
+                    .collect(Collectors.toMap(UserInfoRespDto::getId, Function.identity()));
             List<BookCommentRespDto.CommentInfo> commentInfos = bookComments.stream()
-                .map(v -> BookCommentRespDto.CommentInfo.builder()
-                    .id(v.getId())
-                    .commentUserId(v.getUserId())
-                    .commentUser(userInfoMap.get(v.getUserId()).getUsername())
-                    .commentUserPhoto(userInfoMap.get(v.getUserId()).getUserPhoto())
-                    .commentContent(v.getCommentContent())
-                    .commentTime(v.getCreateTime()).build()).toList();
+                    .map(v -> BookCommentRespDto.CommentInfo.builder()
+                            .id(v.getId())
+                            .commentUserId(v.getUserId())
+                            .commentUser(userInfoMap.get(v.getUserId()).getUsername())
+                            .commentUserPhoto(userInfoMap.get(v.getUserId()).getUserPhoto())
+                            .commentContent(v.getCommentContent())
+                            .commentTime(v.getCreateTime()).build()).toList();
             bookCommentRespDto.setComments(commentInfos);
         } else {
             bookCommentRespDto.setComments(Collections.emptyList());
@@ -267,7 +268,7 @@ public class BookServiceImpl implements BookService {
     public RestResp<Void> deleteComment(BookCommentReqDto dto) {
         QueryWrapper<BookComment> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.CommonColumnEnum.ID.getName(), dto.getCommentId())
-            .eq(DatabaseConsts.BookCommentTable.COLUMN_USER_ID, dto.getUserId());
+                .eq(DatabaseConsts.BookCommentTable.COLUMN_USER_ID, dto.getUserId());
         bookCommentMapper.delete(queryWrapper);
         return RestResp.ok();
     }
@@ -276,7 +277,7 @@ public class BookServiceImpl implements BookService {
     public RestResp<Void> updateComment(BookCommentReqDto dto) {
         QueryWrapper<BookComment> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.CommonColumnEnum.ID.getName(), dto.getCommentId())
-            .eq(DatabaseConsts.BookCommentTable.COLUMN_USER_ID, dto.getUserId());
+                .eq(DatabaseConsts.BookCommentTable.COLUMN_USER_ID, dto.getUserId());
         BookComment bookComment = new BookComment();
         bookComment.setCommentContent(dto.getCommentContent());
         bookCommentMapper.update(bookComment, queryWrapper);
@@ -324,8 +325,8 @@ public class BookServiceImpl implements BookService {
         int chapterNum = 0;
         QueryWrapper<BookChapter> chapterQueryWrapper = new QueryWrapper<>();
         chapterQueryWrapper.eq(DatabaseConsts.BookChapterTable.COLUMN_BOOK_ID, dto.getBookId())
-            .orderByDesc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM)
-            .last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
+                .orderByDesc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM)
+                .last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
         BookChapter bookChapter = bookChapterMapper.selectOne(chapterQueryWrapper);
         if (Objects.nonNull(bookChapter)) {
             chapterNum = bookChapter.getChapterNum() + 1;
@@ -373,18 +374,18 @@ public class BookServiceImpl implements BookService {
         page.setSize(dto.getPageSize());
         QueryWrapper<BookInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.BookTable.AUTHOR_ID, dto.getAuthorId())
-            .orderByDesc(DatabaseConsts.CommonColumnEnum.CREATE_TIME.getName());
+                .orderByDesc(DatabaseConsts.CommonColumnEnum.CREATE_TIME.getName());
         IPage<BookInfo> bookInfoPage = bookInfoMapper.selectPage(page, queryWrapper);
         return RestResp.ok(PageRespDto.of(dto.getPageNum(), dto.getPageSize(), page.getTotal(),
-            bookInfoPage.getRecords().stream().map(v -> BookInfoRespDto.builder()
-                .id(v.getId())
-                .bookName(v.getBookName())
-                .picUrl(v.getPicUrl())
-                .categoryName(v.getCategoryName())
-                .wordCount(v.getWordCount())
-                .visitCount(v.getVisitCount())
-                .updateTime(v.getUpdateTime())
-                .build()).toList()));
+                bookInfoPage.getRecords().stream().map(v -> BookInfoRespDto.builder()
+                        .id(v.getId())
+                        .bookName(v.getBookName())
+                        .picUrl(v.getPicUrl())
+                        .categoryName(v.getCategoryName())
+                        .wordCount(v.getWordCount())
+                        .visitCount(v.getVisitCount())
+                        .updateTime(v.getUpdateTime())
+                        .build()).toList()));
     }
 
     @Override
@@ -394,15 +395,15 @@ public class BookServiceImpl implements BookService {
         page.setSize(dto.getPageSize());
         QueryWrapper<BookChapter> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DatabaseConsts.BookChapterTable.COLUMN_BOOK_ID, dto.getBookId())
-            .orderByDesc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM);
+                .orderByDesc(DatabaseConsts.BookChapterTable.COLUMN_CHAPTER_NUM);
         IPage<BookChapter> bookChapterPage = bookChapterMapper.selectPage(page, queryWrapper);
         return RestResp.ok(PageRespDto.of(dto.getPageNum(), dto.getPageSize(), page.getTotal(),
-            bookChapterPage.getRecords().stream().map(v -> BookChapterRespDto.builder()
-                .id(v.getId())
-                .chapterName(v.getChapterName())
-                .chapterUpdateTime(v.getUpdateTime())
-                .isVip(v.getIsVip())
-                .build()).toList()));
+                bookChapterPage.getRecords().stream().map(v -> BookChapterRespDto.builder()
+                        .id(v.getId())
+                        .chapterName(v.getChapterName())
+                        .chapterUpdateTime(v.getUpdateTime())
+                        .isVip(v.getIsVip())
+                        .build()).toList()));
     }
 
     @Override
@@ -410,30 +411,30 @@ public class BookServiceImpl implements BookService {
         QueryWrapper<BookInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.clear();
         queryWrapper
-            .orderByAsc(DatabaseConsts.CommonColumnEnum.ID.getName())
-            .gt(DatabaseConsts.CommonColumnEnum.ID.getName(), maxBookId)
-            .gt(DatabaseConsts.BookTable.COLUMN_WORD_COUNT, 0)
-            .last(DatabaseConsts.SqlEnum.LIMIT_30.getSql());
+                .orderByAsc(DatabaseConsts.CommonColumnEnum.ID.getName())
+                .gt(DatabaseConsts.CommonColumnEnum.ID.getName(), maxBookId)
+                .gt(DatabaseConsts.BookTable.COLUMN_WORD_COUNT, 0)
+                .last(DatabaseConsts.SqlEnum.LIMIT_30.getSql());
         return RestResp.ok(bookInfoMapper.selectList(queryWrapper).stream().map(bookInfo -> BookEsRespDto.builder()
-            .id(bookInfo.getId())
-            .categoryId(bookInfo.getCategoryId())
-            .categoryName(bookInfo.getCategoryName())
-            .bookDesc(bookInfo.getBookDesc())
-            .bookName(bookInfo.getBookName())
-            .authorId(bookInfo.getAuthorId())
-            .authorName(bookInfo.getAuthorName())
-            .bookStatus(bookInfo.getBookStatus())
-            .commentCount(bookInfo.getCommentCount())
-            .isVip(bookInfo.getIsVip())
-            .score(bookInfo.getScore())
-            .visitCount(bookInfo.getVisitCount())
-            .wordCount(bookInfo.getWordCount())
-            .workDirection(bookInfo.getWorkDirection())
-            .lastChapterId(bookInfo.getLastChapterId())
-            .lastChapterName(bookInfo.getLastChapterName())
-            .lastChapterUpdateTime(bookInfo.getLastChapterUpdateTime()
-                .toInstant(ZoneOffset.ofHours(8)).toEpochMilli())
-            .build()).collect(Collectors.toList()));
+                .id(bookInfo.getId())
+                .categoryId(bookInfo.getCategoryId())
+                .categoryName(bookInfo.getCategoryName())
+                .bookDesc(bookInfo.getBookDesc())
+                .bookName(bookInfo.getBookName())
+                .authorId(bookInfo.getAuthorId())
+                .authorName(bookInfo.getAuthorName())
+                .bookStatus(bookInfo.getBookStatus())
+                .commentCount(bookInfo.getCommentCount())
+                .isVip(bookInfo.getIsVip())
+                .score(bookInfo.getScore())
+                .visitCount(bookInfo.getVisitCount())
+                .wordCount(bookInfo.getWordCount())
+                .workDirection(bookInfo.getWorkDirection())
+                .lastChapterId(bookInfo.getLastChapterId())
+                .lastChapterName(bookInfo.getLastChapterName())
+                .lastChapterUpdateTime(bookInfo.getLastChapterUpdateTime()
+                        .toInstant(ZoneOffset.ofHours(8)).toEpochMilli())
+                .build()).collect(Collectors.toList()));
     }
 
     @Override
@@ -441,13 +442,13 @@ public class BookServiceImpl implements BookService {
         QueryWrapper<BookInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.in(DatabaseConsts.CommonColumnEnum.ID.getName(), bookIds);
         return RestResp.ok(
-            bookInfoMapper.selectList(queryWrapper).stream().map(v -> BookInfoRespDto.builder()
-                .id(v.getId())
-                .bookName(v.getBookName())
-                .authorName(v.getAuthorName())
-                .picUrl(v.getPicUrl())
-                .bookDesc(v.getBookDesc())
-                .build()).collect(Collectors.toList()));
+                bookInfoMapper.selectList(queryWrapper).stream().map(v -> BookInfoRespDto.builder()
+                        .id(v.getId())
+                        .bookName(v.getBookName())
+                        .authorName(v.getAuthorName())
+                        .picUrl(v.getPicUrl())
+                        .bookDesc(v.getBookDesc())
+                        .build()).collect(Collectors.toList()));
     }
 
     @Override
@@ -464,9 +465,72 @@ public class BookServiceImpl implements BookService {
 
         // 组装数据并返回
         return RestResp.ok(BookContentAboutRespDto.builder()
-            .bookInfo(bookInfo)
-            .chapterInfo(bookChapter)
-            .bookContent(content)
-            .build());
+                .bookInfo(bookInfo)
+                .chapterInfo(bookChapter)
+                .bookContent(content)
+                .build());
+    }
+
+
+    @Override
+    public RestResp<UpdateBookChapterRspDto> getChapter(Long chapterId) {
+
+        // 小说章节
+        BookChapter bookChapter = bookChapterMapper.selectOne(new LambdaQueryWrapper<BookChapter>().eq(BookChapter::getId, chapterId));
+
+        // 小说内容
+        BookContent bookContent = bookContentMapper.selectOne(new LambdaQueryWrapper<BookContent>()
+                .eq(BookContent::getChapterId, chapterId));
+
+        // 小说信息
+        BookInfo bookInfo = bookInfoMapper.selectOne(new LambdaQueryWrapper<BookInfo>()
+                .eq(BookInfo::getId, bookChapter.getBookId()));
+
+
+        return RestResp.ok(UpdateBookChapterRspDto.builder()
+                .chapterContent(bookContent.getContent())
+                .chapterName(bookChapter.getChapterName())
+                .isVip(bookInfo.getIsVip()).build());
+    }
+
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public RestResp<Void> updateBookChapter(Long chapterId, UpdateBookChapterReqDto updateBookChapterReqDto) {
+        // 先获得小说章节
+        BookChapter bookChapter = bookChapterMapper.selectOne(new LambdaQueryWrapper<BookChapter>()
+                .eq(BookChapter::getId, chapterId));
+        // 查小说内容表
+        BookContent bookContent = bookContentMapper.selectOne(new LambdaQueryWrapper<BookContent>()
+                .eq(BookContent::getChapterId, chapterId));
+        // 查小说信息表
+        BookInfo bookInfo = bookInfoMapper.selectOne(new LambdaQueryWrapper<BookInfo>()
+                .eq(BookInfo::getId, bookChapter.getBookId()));
+
+        // 更新小说内容
+        bookContent.setContent(updateBookChapterReqDto.getChapterContent());
+        bookContent.setUpdateTime(LocalDateTime.now());
+        bookContentMapper.updateById(bookContent);
+        // 更新小说章节
+        bookChapter.setChapterName(updateBookChapterReqDto.getChapterName());
+        bookChapter.setUpdateTime(LocalDateTime.now());
+        bookChapter.setIsVip(updateBookChapterReqDto.getIsVip());
+        bookChapterMapper.updateById(bookChapter);
+        // 更新小说信息
+        bookInfo.setUpdateTime(LocalDateTime.now());
+        // 如果此章节是小说的最新章节 则需要更新最后更新时间
+        // 最新章节
+        BookChapter newestChapter = bookChapterMapper.selectOne(new LambdaQueryWrapper<BookChapter>()
+                .eq(BookChapter::getBookId, bookInfo.getId())
+                .orderByDesc(BookChapter::getId)
+                .last(DatabaseConsts.SqlEnum.LIMIT_1.getSql()));
+        // 若id相同 说明是最后一章
+        if (chapterId.equals(newestChapter.getId())){
+            // 小说信息中的最新章节更新时间为现在
+            bookInfo.setLastChapterUpdateTime(LocalDateTime.now());
+        }
+        bookInfoMapper.updateById(bookInfo);
+
+        return null;
     }
 }

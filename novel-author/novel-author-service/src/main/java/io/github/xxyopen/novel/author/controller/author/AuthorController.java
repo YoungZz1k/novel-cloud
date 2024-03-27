@@ -3,12 +3,11 @@ package io.github.xxyopen.novel.author.controller.author;
 import io.github.xxyopen.novel.author.dto.req.AuthorRegisterReqDto;
 import io.github.xxyopen.novel.author.manager.feign.BookFeignManager;
 import io.github.xxyopen.novel.author.service.AuthorService;
-import io.github.xxyopen.novel.book.dto.req.BookAddReqDto;
-import io.github.xxyopen.novel.book.dto.req.BookPageReqDto;
-import io.github.xxyopen.novel.book.dto.req.ChapterAddReqDto;
-import io.github.xxyopen.novel.book.dto.req.ChapterPageReqDto;
+import io.github.xxyopen.novel.book.dto.req.*;
 import io.github.xxyopen.novel.book.dto.resp.BookChapterRespDto;
+import io.github.xxyopen.novel.book.dto.resp.BookContentAboutRespDto;
 import io.github.xxyopen.novel.book.dto.resp.BookInfoRespDto;
+import io.github.xxyopen.novel.book.dto.resp.UpdateBookChapterRspDto;
 import io.github.xxyopen.novel.common.auth.UserHolder;
 import io.github.xxyopen.novel.common.constant.ApiRouterConsts;
 import io.github.xxyopen.novel.common.constant.SystemConfigConsts;
@@ -90,6 +89,12 @@ public class AuthorController {
         return bookFeignManager.publishBookChapter(dto);
     }
 
+    @Operation(summary = "小说章节修改查询接口")
+    @GetMapping("book/chapter/{chapterId}")
+    public RestResp<UpdateBookChapterRspDto> getChapter(@PathVariable("chapterId") Long chapterId){
+        return bookFeignManager.getChapter(chapterId);
+    }
+
     /**
      * 小说章节发布列表查询接口
      */
@@ -103,6 +108,14 @@ public class AuthorController {
         chapterPageReqReqDto.setPageNum(dto.getPageNum());
         chapterPageReqReqDto.setPageSize(dto.getPageSize());
         return bookFeignManager.listPublishBookChapters(chapterPageReqReqDto);
+    }
+
+
+    @Operation(summary = "小说章节修改接口")
+    @PutMapping("book/chapter/{chapterId}")
+    public RestResp<Void> UpdateBookChapter(@PathVariable Long chapterId, @RequestBody UpdateBookChapterReqDto updateBookChapterReqDto){
+        bookFeignManager.updateBookChapter(chapterId,updateBookChapterReqDto);
+        return RestResp.ok();
     }
 
 }

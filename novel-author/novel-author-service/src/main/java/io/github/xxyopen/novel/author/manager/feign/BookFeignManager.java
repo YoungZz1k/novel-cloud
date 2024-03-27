@@ -2,13 +2,8 @@ package io.github.xxyopen.novel.author.manager.feign;
 
 import io.github.xxyopen.novel.author.dto.AuthorInfoDto;
 import io.github.xxyopen.novel.author.manager.cache.AuthorInfoCacheManager;
-import io.github.xxyopen.novel.book.dto.req.BookAddReqDto;
-import io.github.xxyopen.novel.book.dto.req.BookPageReqDto;
-import io.github.xxyopen.novel.book.dto.req.ChapterAddReqDto;
-import io.github.xxyopen.novel.book.dto.req.ChapterPageReqDto;
-import io.github.xxyopen.novel.book.dto.resp.BookChapterRespDto;
-import io.github.xxyopen.novel.book.dto.resp.BookEsRespDto;
-import io.github.xxyopen.novel.book.dto.resp.BookInfoRespDto;
+import io.github.xxyopen.novel.book.dto.req.*;
+import io.github.xxyopen.novel.book.dto.resp.*;
 import io.github.xxyopen.novel.book.feign.BookFeign;
 import io.github.xxyopen.novel.common.auth.UserHolder;
 import io.github.xxyopen.novel.common.constant.ErrorCodeEnum;
@@ -56,5 +51,12 @@ public class BookFeignManager {
         return bookFeign.listPublishBookChapters(dto);
     }
 
+    public RestResp<UpdateBookChapterRspDto> getChapter(Long chapterId){
+        return bookFeign.getChapter(chapterId);
+    }
 
+
+    public RestResp<Void> updateBookChapter(Long chapterId, UpdateBookChapterReqDto updateBookChapterReqDto) {
+        return bookFeign.updateBookChapter(chapterId,updateBookChapterReqDto);
+    }
 }

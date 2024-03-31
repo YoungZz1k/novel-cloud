@@ -59,4 +59,8 @@ public class BookFeignManager {
     public RestResp<Void> updateBookChapter(Long chapterId, UpdateBookChapterReqDto updateBookChapterReqDto) {
         return bookFeign.updateBookChapter(chapterId,updateBookChapterReqDto);
     }
+
+    public RestResp<Boolean> deleteBookChapter(Long chapterId) {
+        return bookFeign.deleteBookChapter(chapterId);
+    }
 }

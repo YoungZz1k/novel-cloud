@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -120,6 +121,12 @@ public class InnerBookController {
     @Operation(summary = "小说章节修改接口")
     public RestResp<Void> updateBookChapter(@PathVariable("chapterId") Long chapterId,@RequestBody UpdateBookChapterReqDto updateBookChapterReqDto){
         return bookService.updateBookChapter(chapterId,updateBookChapterReqDto);
+    }
+
+    @PutMapping("/deleteChapter/{chapterId}")
+    @Operation(summary = "小说章节删除接口")
+    public RestResp<Boolean> deleteBookChapter(@PathVariable("chapterId") Long chapterId){
+        return RestResp.ok(bookService.deleteBookChapter(chapterId));
     }
 
 }

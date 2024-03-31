@@ -118,4 +118,11 @@ public class AuthorController {
         return RestResp.ok();
     }
 
+    @PutMapping("book/deleteChapter/{chapterId}")
+    @Operation(summary = "小说章节删除接口")
+    public RestResp<Boolean> deleteBookChapter(@PathVariable("chapterId") Long chapterId){
+        return bookFeignManager.deleteBookChapter(chapterId);
+    }
+
+
 }

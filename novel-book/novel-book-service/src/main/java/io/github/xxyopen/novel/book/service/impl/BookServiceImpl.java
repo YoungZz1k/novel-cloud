@@ -533,4 +533,25 @@ public class BookServiceImpl implements BookService {
 
         return null;
     }
+
+
+    /**
+     * 小说章节删除接口
+     * @param chapterId
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean deleteBookChapter(Long chapterId) {
+
+        try {
+            // 删除章节表跟内容表与此章节有关的内容
+            bookChapterMapper.deleteById(chapterId);
+            bookContentMapper.delete(new LambdaQueryWrapper<BookContent>()
+                    .eq(BookContent::getChapterId,chapterId));
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

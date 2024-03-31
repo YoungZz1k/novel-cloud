@@ -1,6 +1,7 @@
 package io.github.xxyopen.novel.user.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
  * @author xiongxiaoyang
  * @date 2022/05/11
  */
-@TableName("user_comment")
+@TableName("book_comment")
 public class UserComment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +30,7 @@ public class UserComment implements Serializable {
     /**
      * 评论用户ID
      */
+    @TableField("user_id")
     private Long userId;
 
     /**

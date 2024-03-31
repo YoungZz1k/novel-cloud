@@ -34,4 +34,6 @@ public class InnerUserController {
         return userService.listUserInfoByIds(userIds);
     }
 
+
+
 }

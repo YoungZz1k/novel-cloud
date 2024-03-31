@@ -1,6 +1,9 @@
 package io.github.xxyopen.novel.user.service.impl;
 
+import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.github.xxyopen.novel.book.dto.resp.BookInfoRespDto;
 import io.github.xxyopen.novel.common.auth.JwtUtils;
 import io.github.xxyopen.novel.common.constant.CommonConsts;
 import io.github.xxyopen.novel.common.constant.DatabaseConsts;
@@ -9,17 +12,21 @@ import io.github.xxyopen.novel.common.constant.SystemConfigConsts;
 import io.github.xxyopen.novel.common.resp.RestResp;
 import io.github.xxyopen.novel.config.exception.BusinessException;
 import io.github.xxyopen.novel.user.dao.entity.UserBookshelf;
+import io.github.xxyopen.novel.user.dao.entity.UserComment;
 import io.github.xxyopen.novel.user.dao.entity.UserFeedback;
 import io.github.xxyopen.novel.user.dao.entity.UserInfo;
 import io.github.xxyopen.novel.user.dao.mapper.UserBookshelfMapper;
+import io.github.xxyopen.novel.user.dao.mapper.UserCommentMapper;
 import io.github.xxyopen.novel.user.dao.mapper.UserFeedbackMapper;
 import io.github.xxyopen.novel.user.dao.mapper.UserInfoMapper;
+import io.github.xxyopen.novel.user.dto.req.UserCommentsReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserInfoUptReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserLoginReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserRegisterReqDto;
 import io.github.xxyopen.novel.user.dto.resp.UserInfoRespDto;
 import io.github.xxyopen.novel.user.dto.resp.UserLoginRespDto;
 import io.github.xxyopen.novel.user.dto.resp.UserRegisterRespDto;
+import io.github.xxyopen.novel.user.manager.feign.BookFeignManager;
 import io.github.xxyopen.novel.user.manager.redis.VerifyCodeManager;
 import io.github.xxyopen.novel.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +35,7 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -49,6 +57,10 @@ public class UserServiceImpl implements UserService {
     private final UserFeedbackMapper userFeedbackMapper;
 
     private final UserBookshelfMapper userBookshelfMapper;
+
+    private final UserCommentMapper userCommentMapper;
+
+    private final BookFeignManager bookFeignManager;
 
     @Override
     public RestResp<UserRegisterRespDto> register(UserRegisterReqDto dto) {
@@ -180,5 +192,35 @@ public class UserServiceImpl implements UserService {
                 .username(v.getUsername())
                 .userPhoto(v.getUserPhoto())
                 .build()).collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<UserCommentsReqDto> listComments(Long userId,Integer pageNum, Integer pageSize) {
+        QueryWrapper<UserComment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",userId);
+        List<UserComment> userComments = userCommentMapper.selectList(queryWrapper);
+
+        List<UserCommentsReqDto> res = new ArrayList<>();
+
+        for (UserComment userComment : userComments) {
+            UserCommentsReqDto userCommentsReqDto = new UserCommentsReqDto();
+
+            RestResp<List<BookInfoRespDto>> bookInfoByIds = bookFeignManager.listBookInfoByIds(Lists.newArrayList(userComment.getBookId()));
+
+            for (BookInfoRespDto bookInfoByIdsDatum : bookInfoByIds.getData()) {
+                String bookName = bookInfoByIdsDatum.getBookName();
+
+                userCommentsReqDto.setCommentId(userComment.getId());
+                userCommentsReqDto.setCommentBook(bookName);
+                userCommentsReqDto.setCommentContent(userComment.getCommentContent());
+                userCommentsReqDto.setCommentTime(userComment.getUpdateTime());
+                userCommentsReqDto.setCommentBookPic(bookInfoByIdsDatum.getPicUrl());
+
+                res.add(userCommentsReqDto);
+            }
+
+        }
+
+        return res;
     }
 }

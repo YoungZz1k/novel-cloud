@@ -3,6 +3,7 @@ package io.github.xxyopen.novel.user.service;
 
 import io.github.xxyopen.novel.book.dto.resp.BookEsRespDto;
 import io.github.xxyopen.novel.common.resp.RestResp;
+import io.github.xxyopen.novel.user.dto.req.UserCommentsReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserInfoUptReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserLoginReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserRegisterReqDto;
@@ -86,4 +87,12 @@ public interface UserService {
      * @return 用户信息列表
      */
     RestResp<List<UserInfoRespDto>> listUserInfoByIds(List<Long> userIds);
+
+    /**
+     * 用户评论查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<UserCommentsReqDto> listComments(Long userId,Integer pageNum, Integer pageSize);
 }

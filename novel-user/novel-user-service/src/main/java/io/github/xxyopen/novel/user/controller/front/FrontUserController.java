@@ -5,6 +5,7 @@ import io.github.xxyopen.novel.common.auth.UserHolder;
 import io.github.xxyopen.novel.common.constant.ApiRouterConsts;
 import io.github.xxyopen.novel.common.constant.SystemConfigConsts;
 import io.github.xxyopen.novel.common.resp.RestResp;
+import io.github.xxyopen.novel.user.dto.req.UserCommentsReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserInfoUptReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserLoginReqDto;
 import io.github.xxyopen.novel.user.dto.req.UserRegisterReqDto;
@@ -20,6 +21,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 前台门户-会员模块 API 控制器
@@ -135,6 +138,12 @@ public class FrontUserController {
     @GetMapping("bookshelf_status")
     public RestResp<Integer> getBookshelfStatus(@Parameter(description = "小说ID") String bookId) {
         return userService.getBookshelfStatus(UserHolder.getUserId(), bookId);
+    }
+
+    @Operation(summary = "用户评论查询接口")
+    @GetMapping("/comments")
+    public RestResp<List<UserCommentsReqDto>> listComments(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return RestResp.ok(userService.listComments(UserHolder.getUserId(),pageNum,pageSize));
     }
 
 }

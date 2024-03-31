@@ -2,6 +2,9 @@ package io.github.xxyopen.novel.user.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.github.xxyopen.novel.user.dao.entity.UserComment;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import io.github.xxyopen.novel.user.dao.entity.UserComment;
  */
 public interface UserCommentMapper extends BaseMapper<UserComment> {
 
+    List<UserComment> selectComments(@Param("userId") Long userId,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
 }

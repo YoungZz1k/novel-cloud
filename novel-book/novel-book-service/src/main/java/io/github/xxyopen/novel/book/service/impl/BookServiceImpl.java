@@ -545,13 +545,55 @@ public class BookServiceImpl implements BookService {
     public Boolean deleteBookChapter(Long chapterId) {
 
         try {
+            // 更新小说信息表的字数统计
+            BookChapter bookChapter = bookChapterMapper.selectOne(new LambdaQueryWrapper<BookChapter>()
+                    .eq(BookChapter::getId, chapterId));
+            BookInfo bookInfo = bookInfoMapper.selectOne(new LambdaQueryWrapper<BookInfo>()
+                    .eq(BookInfo::getId, bookChapter.getBookId()));
+
+            bookInfo.setWordCount(bookInfo.getWordCount() - bookChapter.getWordCount());
+            bookInfoMapper.updateById(bookInfo);
+
             // 删除章节表跟内容表与此章节有关的内容
             bookChapterMapper.deleteById(chapterId);
             bookContentMapper.delete(new LambdaQueryWrapper<BookContent>()
                     .eq(BookContent::getChapterId,chapterId));
+
+
             return true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public BookEsRespDto getEsBookById(Long bookId) {
+        QueryWrapper<BookInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.clear();
+        queryWrapper
+                .eq(DatabaseConsts.CommonColumnEnum.ID.getName(), bookId)
+                .gt(DatabaseConsts.BookTable.COLUMN_WORD_COUNT, 0);
+        BookInfo bookInfo = bookInfoMapper.selectOne(queryWrapper);
+
+        return BookEsRespDto.builder()
+                .id(bookInfo.getId())
+                .categoryId(bookInfo.getCategoryId())
+                .categoryName(bookInfo.getCategoryName())
+                .bookDesc(bookInfo.getBookDesc())
+                .bookName(bookInfo.getBookName())
+                .authorId(bookInfo.getAuthorId())
+                .authorName(bookInfo.getAuthorName())
+                .bookStatus(bookInfo.getBookStatus())
+                .commentCount(bookInfo.getCommentCount())
+                .isVip(bookInfo.getIsVip())
+                .score(bookInfo.getScore())
+                .visitCount(bookInfo.getVisitCount())
+                .wordCount(bookInfo.getWordCount())
+                .workDirection(bookInfo.getWorkDirection())
+                .lastChapterId(bookInfo.getLastChapterId())
+                .lastChapterName(bookInfo.getLastChapterName())
+                .lastChapterUpdateTime(bookInfo.getLastChapterUpdateTime()
+                        .toInstant(ZoneOffset.ofHours(8)).toEpochMilli())
+                .build();
     }
 }

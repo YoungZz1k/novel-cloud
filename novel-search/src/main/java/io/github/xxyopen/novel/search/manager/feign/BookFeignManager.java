@@ -1,6 +1,8 @@
 package io.github.xxyopen.novel.search.manager.feign;
 
+import com.google.common.collect.Lists;
 import io.github.xxyopen.novel.book.dto.resp.BookEsRespDto;
+import io.github.xxyopen.novel.book.dto.resp.BookInfoRespDto;
 import io.github.xxyopen.novel.book.feign.BookFeign;
 import io.github.xxyopen.novel.common.constant.ErrorCodeEnum;
 import io.github.xxyopen.novel.common.resp.RestResp;
@@ -29,6 +31,10 @@ public class BookFeignManager {
             return listRestResp.getData();
         }
         return new ArrayList<>(0);
+    }
+
+    public RestResp<BookEsRespDto> getEsBookById(Long bookId){
+        return bookFeign.getEsBookById(bookId);
     }
 
 }

@@ -195,4 +195,6 @@ public interface BookService {
     RestResp<Void> updateBookChapter(Long chapterId, UpdateBookChapterReqDto updateBookChapterReqDto);
 
     Boolean deleteBookChapter(Long chapterId);
+
+    BookEsRespDto getEsBookById(Long bookId);
 }

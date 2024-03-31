@@ -95,6 +95,14 @@ public interface BookFeign {
     @PutMapping(ApiRouterConsts.API_INNER_BOOK_URL_PREFIX + "/deleteChapter/{chapterId}")
     RestResp<Boolean> deleteBookChapter(@PathVariable("chapterId")Long chapterId);
 
+    /**
+     * 获取小说信息用作ES更新
+     * @param bookId
+     * @return
+     */
+    @GetMapping(ApiRouterConsts.API_INNER_BOOK_URL_PREFIX + "/getEsBookById")
+    RestResp<BookEsRespDto> getEsBookById(@RequestParam Long bookId);
+
     @Component
     class BookFeignFallback implements BookFeign {
 
@@ -156,6 +164,11 @@ public interface BookFeign {
 
         @Override
         public RestResp<Boolean> deleteBookChapter(Long chapterId) {
+            return RestResp.ok(null);
+        }
+
+        @Override
+        public RestResp<BookEsRespDto> getEsBookById(Long bookId) {
             return RestResp.ok(null);
         }
     }

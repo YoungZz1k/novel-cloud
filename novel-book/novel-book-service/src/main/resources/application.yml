@@ -1,6 +1,8 @@
 server:
   port: 9020
 spring:
+  amqp:
+    enabled: true
   profiles:
     include: common
     active: dev

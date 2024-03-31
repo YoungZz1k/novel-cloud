@@ -129,4 +129,10 @@ public class InnerBookController {
         return RestResp.ok(bookService.deleteBookChapter(chapterId));
     }
 
+    @GetMapping("/getEsBookById")
+    @Operation(summary = "查询要更新到ES的小说")
+    public RestResp<BookEsRespDto> getEsBookById(@RequestParam Long bookId){
+        return RestResp.ok(bookService.getEsBookById(bookId));
+    }
+
 }

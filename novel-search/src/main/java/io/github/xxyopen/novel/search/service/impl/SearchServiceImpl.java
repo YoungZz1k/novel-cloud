@@ -17,6 +17,7 @@ import io.github.xxyopen.novel.book.dto.resp.BookEsRespDto;
 import io.github.xxyopen.novel.book.dto.resp.BookInfoRespDto;
 import io.github.xxyopen.novel.common.resp.PageRespDto;
 import io.github.xxyopen.novel.common.resp.RestResp;
+import io.github.xxyopen.novel.search.Strategy.SearchConditionEnum;
 import io.github.xxyopen.novel.search.constant.EsConsts;
 import io.github.xxyopen.novel.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -125,65 +126,35 @@ public class SearchServiceImpl implements SearchService {
 
             if (StringUtils.isNotEmpty(condition.getKeyword())) {
                 // 关键词匹配
-                b.must(f -> f.multiMatch(t -> t
-                        .fields(EsConsts.BookIndex.FIELD_BOOK_NAME + "^2"
-                                , EsConsts.BookIndex.FIELD_AUTHOR_NAME + "^1.8"
-                                , EsConsts.BookIndex.FIELD_BOOK_DESC + "^0.1")
-                        .query(condition.getKeyword()
-                        )
-                ));
+                SearchConditionEnum.KeywordMatchStrategy.buildQuery(b,condition);
             }
 
             // 精确查询
             if (Objects.nonNull(condition.getWorkDirection())) {
-                b.must(TermQuery.of(f -> f
-                                .field(EsConsts.BookIndex.FIELD_WORK_DIRECTION)
-                                .value(condition.getWorkDirection())
-                        )._toQuery()
-                );
+                SearchConditionEnum.WorkDirectionMatchStrategy.buildQuery(b,condition);
             }
 
             // 小说类别
             if (Objects.nonNull(condition.getCategoryId())) {
-                b.must(TermQuery.of(f -> f
-                                .field(EsConsts.BookIndex.FIELD_CATEGORY_ID)
-                                .value(condition.getCategoryId())
-                        )._toQuery()
-                );
+                SearchConditionEnum.CategoryIdMatchStrategy.buildQuery(b,condition);
             }
 
             // 完结状态
             if (Objects.nonNull(condition.getBookStatus())) {
-                b.must(TermQuery.of(f -> f
-                                .field(EsConsts.BookIndex.FIELD_BOOK_STATUS)
-                                .value(condition.getBookStatus())
-                        )._toQuery()
-                );
+                SearchConditionEnum.BookStatusMatchStrategy.buildQuery(b,condition);
             }
 
             // 范围查询
             if (Objects.nonNull(condition.getWordCountMin())) {// 大于最小字数
-                b.must(RangeQuery.of(f -> f
-                                .field(EsConsts.BookIndex.FIELD_WORD_COUNT)
-                                .gte(JsonData.of(condition.getWordCountMin()))
-                        )._toQuery()
-                );
+                SearchConditionEnum.WordCountMinMatchStrategy.buildQuery(b,condition);
             }
 
             if (Objects.nonNull(condition.getWordCountMax())) {// 小于最大字数
-                b.must(RangeQuery.of(f -> f
-                                .field(EsConsts.BookIndex.FIELD_WORD_COUNT)
-                                .lt(JsonData.of(condition.getWordCountMax()))
-                        )._toQuery()
-                );
+                SearchConditionEnum.WordCountMaxMatchStrategy.buildQuery(b,condition);
             }
 
             if (Objects.nonNull(condition.getUpdateTimeMin())) { // 大于最小更新日期
-                b.must(RangeQuery.of(f -> f
-                                .field(EsConsts.BookIndex.FIELD_LAST_CHAPTER_UPDATE_TIME)
-                                .gte(JsonData.of(condition.getUpdateTimeMin().getTime()))
-                        )._toQuery()
-                );
+                SearchConditionEnum.UpdateTimeMinMatchStrategy.buildQuery(b,condition);
             }
 
 

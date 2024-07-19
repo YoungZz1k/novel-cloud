@@ -31,7 +31,7 @@ public class VerifyCodeManager {
         String verifyCode = ImgVerifyCodeUtils.getRandomVerifyCode(4);
         String img = ImgVerifyCodeUtils.genVerifyCodeImg(verifyCode);
         stringRedisTemplate.opsForValue().set(CacheConsts.IMG_VERIFY_CODE_CACHE_KEY + sessionId,
-            verifyCode, Duration.ofMinutes(5));
+            verifyCode, Duration.ofMinutes(2));
         return img;
     }
 

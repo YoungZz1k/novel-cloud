@@ -27,8 +27,8 @@ import java.util.List;
 /**
  * 前台门户-会员模块 API 控制器
  *
- * @author xiongxiaoyang
- * @date 2022/5/17
+ * @author YoungZz1k
+ * @date 2024/11/17
  */
 @Tag(name = "UserController", description = "前台门户-会员模块")
 @SecurityRequirement(name = SystemConfigConsts.HTTP_AUTH_HEADER_NAME)

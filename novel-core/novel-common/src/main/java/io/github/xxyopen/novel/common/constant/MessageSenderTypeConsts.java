@@ -3,8 +3,8 @@ package io.github.xxyopen.novel.common.constant;
 /**
  * 消息发送器的类型
  *
- * @author xiongxiaoyang
- * @date 2023/3/24
+ * @author YoungZz1k
+ * @date 2024/11/24
  */
 public class MessageSenderTypeConsts {
 

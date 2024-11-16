@@ -9,8 +9,8 @@ import java.io.Serializable;
 /**
  * 用户信息 DTO
  *
- * @author xiongxiaoyang
- * @date 2022/5/18
+ * @author YoungZz1k
+ * @date 2024/11/18
  */
 @Data
 @Builder

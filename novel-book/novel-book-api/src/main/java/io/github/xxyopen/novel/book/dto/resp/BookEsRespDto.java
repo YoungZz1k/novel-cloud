@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * Elasticsearch 存储小说 DTO
- * @author xiongxiaoyang
- * @date 2022/5/23
+ * @author YoungZz1k
+ * @date 2024/11/23
  */
 @Data
 @NoArgsConstructor

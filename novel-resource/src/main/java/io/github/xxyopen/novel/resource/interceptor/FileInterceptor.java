@@ -14,8 +14,8 @@ import java.io.OutputStream;
 /**
  * 文件 拦截器
  *
- * @author xiongxiaoyang
- * @date 2022/5/22
+ * @author YoungZz1k
+ * @date 2024/11/22
  */
 @Component
 @RequiredArgsConstructor

@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
  * 新闻类别
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/12
+ * @author YoungZz1k
+ * @date 2024/11/12
  */
 @TableName("news_category")
 public class NewsCategory implements Serializable {

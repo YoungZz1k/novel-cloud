@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
  * 友情链接
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/11
+ * @author YoungZz1k
+ * @date 2024/11/11
  */
 @TableName("home_friend_link")
 public class HomeFriendLink implements Serializable {

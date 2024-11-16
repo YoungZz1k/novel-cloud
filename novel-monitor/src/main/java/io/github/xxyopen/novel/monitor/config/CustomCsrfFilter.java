@@ -12,8 +12,8 @@ import org.springframework.web.util.WebUtils;
 import java.io.IOException;
 
 /**
- * @author xiongxiaoyang
- * @date 2023/3/29
+ * @author YoungZz1k
+ * @date 2024/11/29
  */
 public class CustomCsrfFilter extends OncePerRequestFilter {
 

@@ -27,8 +27,8 @@ import static org.springframework.http.HttpMethod.POST;
 /**
  * Spring Security 配置
  *
- * @author xiongxiaoyang
- * @date 2022/6/8
+ * @author YoungZz1k
+ * @date 2024/11/8
  */
 @Configuration(proxyBeanMethods = false)
 public class SecuritySecureConfig {

@@ -13,8 +13,8 @@ import java.util.Objects;
 /**
  * 用户信息 缓存管理类
  *
- * @author xiongxiaoyang
- * @date 2022/5/12
+ * @author YoungZz1k
+ * @date 2024/11/12
  */
 @Component
 @RequiredArgsConstructor

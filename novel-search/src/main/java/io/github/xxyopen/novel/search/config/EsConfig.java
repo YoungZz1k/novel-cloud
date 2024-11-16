@@ -22,8 +22,8 @@ import java.security.cert.X509Certificate;
 /**
  * Elasticsearch 相关配置
  *
- * @author xiongxiaoyang
- * @date 2022/5/23
+ * @author YoungZz1k
+ * @date 2024/11/23
  */
 @Configuration
 @Slf4j

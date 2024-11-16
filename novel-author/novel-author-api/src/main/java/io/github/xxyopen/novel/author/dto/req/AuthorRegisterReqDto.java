@@ -7,8 +7,8 @@ import lombok.Data;
 /**
  * 作家注册 请求DTO
  *
- * @author xiongxiaoyang
- * @date 2022/5/23
+ * @author YoungZz1k
+ * @date 2024/11/18
  */
 @Data
 public class AuthorRegisterReqDto {

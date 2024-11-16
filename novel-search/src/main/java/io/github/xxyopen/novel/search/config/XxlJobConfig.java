@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 /**
  * XXL-JOB 配置类
  *
- * @author xiongxiaoyang
- * @date 2022/5/31
+ * @author YoungZz1k
+ * @date 2024/11/31
  */
 @Configuration
 @Slf4j

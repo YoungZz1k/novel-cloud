@@ -6,8 +6,8 @@ import lombok.Getter;
 /**
  * 分页响应数据格式封装
  *
- * @author xiongxiaoyang
- * @date 2022/5/11
+ * @author YoungZz1k
+ * @date 2024/11/11
  */
 @Getter
 public class PageRespDto<T> {

@@ -13,8 +13,8 @@ import java.util.Random;
 /**
  * 图片验证码工具类
  *
- * @author xiongxiaoyang
- * @date 2022/5/17
+ * @author YoungZz1k
+ * @date 2024/11/17
  */
 @UtilityClass
 public class ImgVerifyCodeUtils {

@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 /**
  * 小说排行榜 响应DTO
  *
- * @author xiongxiaoyang
- * @date 2022/5/14
+ * @author YoungZz1k
+ * @date 2024/11/14
  */
 @Data
 public class BookRankRespDto implements Serializable {

@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
  * 用户评论
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/11
+ * @author YoungZz1k
+ * @date 2024/11/11
  */
 @TableName("book_comment")
 public class UserComment implements Serializable {

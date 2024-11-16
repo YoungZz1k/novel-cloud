@@ -8,8 +8,8 @@ import io.github.xxyopen.novel.home.dao.entity.HomeBook;
  * 小说推荐 Mapper 接口
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/12
+ * @author YoungZz1k
+ * @date 2024/11/12
  */
 public interface HomeBookMapper extends BaseMapper<HomeBook> {
 

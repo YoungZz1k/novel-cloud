@@ -7,8 +7,8 @@ import lombok.Data;
 /**
  * 小说章节相关 响应DTO
  *
- * @author xiongxiaoyang
- * @date 2022/5/15
+ * @author YoungZz1k
+ * @date 2024/11/15
  */
 @Data
 @Builder

@@ -8,8 +8,8 @@ import org.hibernate.validator.constraints.Length;
 
 /**
  * 小说评论 请求DTO
- * @author xiongxiaoyang
- * @date 2022/5/17
+ * @author YoungZz1k
+ * @date 2024/11/17
  */
 @Data
 public class BookCommentReqDto {

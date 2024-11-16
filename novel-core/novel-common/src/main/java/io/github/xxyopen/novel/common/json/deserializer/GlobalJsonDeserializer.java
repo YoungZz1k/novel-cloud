@@ -10,8 +10,8 @@ import org.springframework.boot.jackson.JsonComponent;
 /**
  * JSON 全局反序列化器
  *
- * @author xiongxiaoyang
- * @date 2022/5/21
+ * @author YoungZz1k
+ * @date 2024/11/21
  */
 @JsonComponent
 public class GlobalJsonDeserializer {

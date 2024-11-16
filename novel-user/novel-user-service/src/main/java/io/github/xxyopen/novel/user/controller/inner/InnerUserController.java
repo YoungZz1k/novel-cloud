@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * 用户微服务内部调用接口
  *
- * @author xiongxiaoyang
- * @date 2023/3/29
+ * @author YoungZz1k
+ * @date 2024/11/29
  */
 @Tag(name = "InnerBookController", description = "内部调用-用户模块")
 @RestController

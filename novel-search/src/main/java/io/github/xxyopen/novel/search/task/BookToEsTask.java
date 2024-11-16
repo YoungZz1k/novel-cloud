@@ -21,8 +21,8 @@ import java.util.List;
 /**
  * 小说数据同步到 elasticsearch 任务
  *
- * @author xiongxiaoyang
- * @date 2022/5/23
+ * @author YoungZz1k
+ * @date 2024/11/23
  */
 @Component
 @RequiredArgsConstructor

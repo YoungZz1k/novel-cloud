@@ -9,8 +9,8 @@ import io.github.xxyopen.novel.common.resp.RestResp;
 /**
  * 搜索 服务类
  *
- * @author xiongxiaoyang
- * @date 2022/5/23
+ * @author YoungZz1k
+ * @date 2024/11/23
  */
 public interface SearchService {
 

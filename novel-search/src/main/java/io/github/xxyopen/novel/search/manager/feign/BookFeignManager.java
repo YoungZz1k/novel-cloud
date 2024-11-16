@@ -16,8 +16,8 @@ import java.util.Objects;
 /**
  * 小说微服务调用 Feign 客户端管理
  *
- * @author xiongxiaoyang
- * @date 2023/3/29
+ * @author YoungZz1k
+ * @date 2024/11/29
  */
 @Component
 @AllArgsConstructor

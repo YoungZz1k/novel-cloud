@@ -8,8 +8,8 @@ import io.github.xxyopen.novel.user.dao.entity.UserPayLog;
  * 用户充值记录 Mapper 接口
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/11
+ * @author YoungZz1k
+ * @date 2024/11/11
  */
 public interface UserPayLogMapper extends BaseMapper<UserPayLog> {
 

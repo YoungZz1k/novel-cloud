@@ -3,8 +3,8 @@ package io.github.xxyopen.novel.common.constant;
 /**
  * API 路由常量
  *
- * @author xiongxiaoyang
- * @date 2022/5/12
+ * @author YoungZz1k
+ * @date 2024/11/12
  */
 public class ApiRouterConsts {
 

@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * 新闻模块 服务实现类
  *
- * @author xiongxiaoyang
- * @date 2022/5/14
+ * @author YoungZz1k
+ * @date 2024/11/14
  */
 @Service
 @RequiredArgsConstructor

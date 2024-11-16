@@ -16,8 +16,8 @@ import java.io.IOException;
 /**
  * 前台门户-资源(图片/视频/文档)模块 API 控制器
  *
- * @author xiongxiaoyang
- * @date 2022/5/17
+ * @author YoungZz1k
+ * @date 2024/11/17
  */
 @Tag(name = "ResourceController", description = "前台门户-资源模块")
 @RestController

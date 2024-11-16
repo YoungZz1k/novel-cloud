@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
  * 用户消费记录
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/11
+ * @author YoungZz1k
+ * @date 2024/11/11
  */
 @TableName("user_consume_log")
 public class UserConsumeLog implements Serializable {

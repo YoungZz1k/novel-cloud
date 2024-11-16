@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * 网关启动类
  *
- * @author xiongxiaoyang
- * @version 1.0
- * @since 2020/5/27
+ * @author YoungZz1k
+ * @date 2024/11/27
  */
 @SpringBootApplication
 public class NovelGatewayApplication {

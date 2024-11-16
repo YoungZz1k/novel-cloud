@@ -3,8 +3,8 @@ package io.github.xxyopen.novel.common.constant;
 /**
  * AMQP 相关常量
  *
- * @author xiongxiaoyang
- * @date 2022/5/25
+ * @author YoungZz1k
+ * @date 2024/11/25
  */
 public class AmqpConsts {
 

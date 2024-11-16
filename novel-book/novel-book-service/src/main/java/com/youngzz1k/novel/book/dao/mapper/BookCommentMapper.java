@@ -8,8 +8,8 @@ import com.youngzz1k.novel.book.dao.entity.BookComment;
  * 小说评论 Mapper 接口
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/11
+ * @author YoungZz1k
+ * @date 2024/11/11
  */
 public interface BookCommentMapper extends BaseMapper<BookComment> {
 

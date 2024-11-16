@@ -8,8 +8,8 @@ import com.youngzz1k.novel.book.dao.entity.BookCategory;
  * 小说类别 Mapper 接口
  * </p>
  *
- * @author xiongxiaoyang
- * @date 2022/05/12
+ * @author YoungZz1k
+ * @date 2024/11/12
  */
 public interface BookCategoryMapper extends BaseMapper<BookCategory> {
 

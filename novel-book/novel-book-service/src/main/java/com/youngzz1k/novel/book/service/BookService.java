@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * 小说模块 服务类
  *
- * @author xiongxiaoyang
- * @date 2022/5/14
+ * @author YoungZz1k
+ * @date 2024/11/14
  */
 public interface BookService {
 

@@ -11,8 +11,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 /**
  * AMQP 消息管理类
  *
- * @author xiongxiaoyang
- * @date 2022/5/25
+ * @author YoungZz1k
+ * @date 2024/11/25
  */
 @Component
 @RequiredArgsConstructor

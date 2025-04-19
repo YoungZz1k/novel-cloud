@@ -3,6 +3,9 @@ package com.youngzz1k.novel.home.dto.resp;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 首页小说推荐 响应DTO
  *
@@ -10,8 +13,10 @@ import lombok.Data;
  * @date 2024/11/13
  */
 @Data
-public class HomeBookRespDto {
+public class HomeBookRespDto implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -345476797576650110L;
     /**
      * 类型;0-轮播图 1-顶部栏 2-本周强推 3-热门推荐 4-精品推荐
      */

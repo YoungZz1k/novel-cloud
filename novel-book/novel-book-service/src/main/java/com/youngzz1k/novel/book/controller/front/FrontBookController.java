@@ -3,6 +3,7 @@ package com.youngzz1k.novel.book.controller.front;
 import com.youngzz1k.novel.book.dto.resp.*;
 import com.youngzz1k.novel.book.service.BookService;
 import com.youngzz1k.novel.common.constant.ApiRouterConsts;
+import com.youngzz1k.novel.common.limit.Limit;
 import com.youngzz1k.novel.common.resp.RestResp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 前台门户-小说模块 API 控制器
@@ -42,6 +44,7 @@ public class FrontBookController {
      */
     @Operation(summary = "小说信息查询接口")
     @GetMapping("{id}")
+    @Limit(key = "getBookById",permitsPerSecond = 1, timeout = 500, timeunit = TimeUnit.MILLISECONDS,msg = "当前排队人数较多，请稍后再试！")
     public RestResp<BookInfoRespDto> getBookById(
         @Parameter(description = "小说 ID") @PathVariable("id") Long bookId) {
         return bookService.getBookById(bookId);

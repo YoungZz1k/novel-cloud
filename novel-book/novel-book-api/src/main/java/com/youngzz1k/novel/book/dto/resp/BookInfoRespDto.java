@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -19,7 +21,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookInfoRespDto {
+public class BookInfoRespDto implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -3200505746186163948L;
 
     /**
      * ID

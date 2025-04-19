@@ -38,7 +38,7 @@ public class BookRankCacheManager {
     /**
      * 查询小说新书榜列表，并放入缓存中
      */
-    @Cacheable(cacheManager = CacheConsts.CAFFEINE_CACHE_MANAGER,
+    @Cacheable(cacheManager = CacheConsts.REDIS_CACHE_MANAGER,
         value = CacheConsts.BOOK_NEWEST_RANK_CACHE_NAME)
     public List<BookRankRespDto> listNewestRankBooks() {
         QueryWrapper<BookInfo> bookInfoQueryWrapper = new QueryWrapper<>();
@@ -51,7 +51,7 @@ public class BookRankCacheManager {
     /**
      * 查询小说更新榜列表，并放入缓存中
      */
-    @Cacheable(cacheManager = CacheConsts.CAFFEINE_CACHE_MANAGER,
+    @Cacheable(cacheManager = CacheConsts.REDIS_CACHE_MANAGER,
         value = CacheConsts.BOOK_UPDATE_RANK_CACHE_NAME)
     public List<BookRankRespDto> listUpdateRankBooks() {
         QueryWrapper<BookInfo> bookInfoQueryWrapper = new QueryWrapper<>();

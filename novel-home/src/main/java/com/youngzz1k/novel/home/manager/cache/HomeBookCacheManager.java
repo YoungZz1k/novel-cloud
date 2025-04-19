@@ -37,7 +37,7 @@ public class HomeBookCacheManager {
     /**
      * 查询首页小说推荐，并放入缓存中
      */
-    @Cacheable(cacheManager = CacheConsts.CAFFEINE_CACHE_MANAGER,
+    @Cacheable(cacheManager = CacheConsts.REDIS_CACHE_MANAGER,
         value = CacheConsts.HOME_BOOK_CACHE_NAME)
     public List<HomeBookRespDto> listHomeBooks() {
         // 从首页小说推荐表中查询出需要推荐的小说
@@ -77,7 +77,7 @@ public class HomeBookCacheManager {
         return Collections.emptyList();
     }
 
-    @CacheEvict(cacheManager = CacheConsts.CAFFEINE_CACHE_MANAGER,
+    @CacheEvict(cacheManager = CacheConsts.REDIS_CACHE_MANAGER,
         value = CacheConsts.HOME_BOOK_CACHE_NAME)
     public void evictCache(){
 

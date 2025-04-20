@@ -3,7 +3,6 @@ package com.youngzz1k.novel.home.controller.front;
 import com.youngzz1k.novel.common.constant.ApiRouterConsts;
 import com.youngzz1k.novel.common.resp.RestResp;
 import com.youngzz1k.novel.home.dto.resp.HomeBookRespDto;
-import com.youngzz1k.novel.home.dto.resp.HomeFriendLinkRespDto;
 import com.youngzz1k.novel.home.service.HomeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,13 +36,5 @@ public class HomeController {
         return homeService.listHomeBooks();
     }
 
-    /**
-     * 首页友情链接列表查询接口
-     */
-    @Operation(summary = "首页友情链接列表查询接口")
-    @GetMapping("friend_Link/list")
-    public RestResp<List<HomeFriendLinkRespDto>> listHomeFriendLinks() {
-        return homeService.listHomeFriendLinks();
-    }
 
 }

@@ -18,7 +18,7 @@ public class NovelCorsConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        // 允许的域,不要写*，否则cookie就无法使用了
+        // 允许的域,不要写*，否则cookie无法使用
         config.addAllowedOrigin("http://localhost:1024");
         // 允许的头信息
         config.addAllowedHeader("*");

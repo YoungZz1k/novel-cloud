@@ -51,6 +51,15 @@ public class InnerBookController {
     }
 
     /**
+     * 查询最新推荐小说
+     */
+    @Operation(summary = "查询最新推荐小说")
+    @PostMapping("listBookByHot")
+    RestResp<List<BookInfoRespDto>> listBookByHot(@RequestParam Integer size) {
+        return bookService.listBookByHot(size);
+    }
+
+    /**
      * 发表评论接口
      */
     @Operation(summary = "发表评论接口")

@@ -197,4 +197,6 @@ public interface BookService {
     Boolean deleteBookChapter(Long chapterId);
 
     BookEsRespDto getEsBookById(Long bookId);
+
+    RestResp<List<BookInfoRespDto>> listBookByHot(Integer size);
 }

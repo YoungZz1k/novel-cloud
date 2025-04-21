@@ -39,6 +39,12 @@ public interface BookFeign {
     RestResp<List<BookInfoRespDto>> listBookInfoByIds(List<Long> bookIds);
 
     /**
+     * 根据热度查询小说信息
+     */
+    @PostMapping(ApiRouterConsts.API_INNER_BOOK_URL_PREFIX + "/listBookByHot")
+    RestResp<List<BookInfoRespDto>> listBookByHot(Integer size);
+
+    /**
      * 发表评论
      */
     @PostMapping(ApiRouterConsts.API_INNER_BOOK_URL_PREFIX + "/publishComment")
@@ -116,6 +122,11 @@ public interface BookFeign {
 
         @Override
         public RestResp<List<BookInfoRespDto>> listBookInfoByIds(List<Long> bookIds) {
+            return RestResp.ok(new ArrayList<>(0));
+        }
+
+        @Override
+        public RestResp<List<BookInfoRespDto>> listBookByHot(Integer size) {
             return RestResp.ok(new ArrayList<>(0));
         }
 

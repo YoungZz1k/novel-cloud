@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookInfoRespDto implements Serializable {
+public class BookInfoRespDto  implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -3200505746186163948L;
@@ -123,5 +123,39 @@ public class BookInfoRespDto implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime updateTime;
 
+
+    /**
+     * 作品方向;0-男频 1-女频
+     */
+    @Schema(description = "作品方向;0-男频 1-女频")
+    private Integer workDirection;
+
+
+    /**
+     * 评分;总分:10 ，真实评分 = score/10
+     */
+    @Schema(description = "评分;总分:10 ，真实评分 = score/10")
+    private Integer score;
+
+
+    /**
+     * 最新章节更新时间
+     */
+    @Schema(description = "最新章节更新时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime lastChapterUpdateTime;
+
+    /**
+     * 是否收费;1-收费 0-免费
+     */
+    @Schema(description = " 是否收费;1-收费 0-免费")
+    private Integer isVip;
+
+    /**
+     * 创建时间
+     */
+    @Schema(description = "创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime createTime;
 
 }

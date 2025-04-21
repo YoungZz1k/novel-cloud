@@ -28,6 +28,7 @@ import com.youngzz1k.novel.config.annotation.Lock;
 import com.youngzz1k.novel.user.dto.resp.UserInfoRespDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -595,5 +596,47 @@ public class BookServiceImpl implements BookService {
                 .lastChapterUpdateTime(bookInfo.getLastChapterUpdateTime()
                         .toInstant(ZoneOffset.ofHours(8)).toEpochMilli())
                 .build();
+    }
+
+    @Override
+    public RestResp<List<BookInfoRespDto>> listBookByHot(Integer size) {
+        LinkedList<BookInfoRespDto> result = new LinkedList<>();
+        // 查询评分前四作为轮播图
+        List<BookInfo> carouselBookInfos = bookInfoMapper.selectList(new LambdaQueryWrapper<BookInfo>()
+                .orderByDesc(BookInfo::getScore)
+                .last("4"));
+        result.addAll(getReturnList(carouselBookInfos));
+        // 查询评分前10,点击前10作为顶部栏
+        List<BookInfo> topBookInfos = bookInfoMapper.selectList(new LambdaQueryWrapper<BookInfo>()
+                .orderByDesc(BookInfo::getScore)
+                .orderByDesc(BookInfo::getVisitCount)
+                .last("10"));
+        result.addAll(getReturnList(topBookInfos));
+        // 查询点击前5，最近更新前5作为本周强推
+        List<BookInfo> weekBookInfos = bookInfoMapper.selectList(new LambdaQueryWrapper<BookInfo>()
+                .orderByDesc(BookInfo::getVisitCount)
+                .orderByDesc(BookInfo::getLastChapterUpdateTime)
+                .last("5"));
+        result.addAll(getReturnList(weekBookInfos));
+        // 查询点击前6作为热门推荐
+        List<BookInfo> hotBookInfos = bookInfoMapper.selectList(new LambdaQueryWrapper<BookInfo>()
+                .orderByDesc(BookInfo::getVisitCount)
+                .last("6"));
+        result.addAll(getReturnList(hotBookInfos));
+        // 查询点击前6，总字数前6作为精品推荐
+        List<BookInfo> goodBookInfos = bookInfoMapper.selectList(new LambdaQueryWrapper<BookInfo>()
+                .orderByDesc(BookInfo::getVisitCount)
+                .orderByDesc(BookInfo::getWordCount)
+                .last("6"));
+        result.addAll(getReturnList(goodBookInfos));
+        return RestResp.ok(result);
+    }
+
+    private static List<BookInfoRespDto> getReturnList(List<BookInfo> bookInfos) {
+        return bookInfos.stream().map(f -> {
+            BookInfoRespDto bookInfoRespDto = new BookInfoRespDto();
+            BeanUtils.copyProperties(f, bookInfoRespDto);
+            return bookInfoRespDto;
+        }).toList();
     }
 }

@@ -6,6 +6,7 @@ import com.xxl.job.core.handler.annotation.XxlJob;
 import com.youngzz1k.novel.book.dto.resp.BookInfoRespDto;
 import com.youngzz1k.novel.home.dao.entity.HomeBook;
 import com.youngzz1k.novel.home.dao.mapper.HomeBookMapper;
+import com.youngzz1k.novel.home.manager.cache.HomeBookCacheManager;
 import com.youngzz1k.novel.home.manager.feign.BookFeignManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ public class UpdateRecommendBookInfoJob {
 
     private final BookFeignManager bookFeignManager;
 
+    private final HomeBookCacheManager homeBookCacheManager;
+
     @XxlJob("updateRecommendBookInfo")
     private ReturnT<String> updateRecommendBookInfo() {
         try {
@@ -38,6 +41,7 @@ public class UpdateRecommendBookInfoJob {
                 homeBook.setUpdateTime(LocalDateTime.now());
                 homeBookMapper.updateById(homeBook);
             }
+            homeBookCacheManager.evictCache();
             return ReturnT.SUCCESS;
         } catch (Exception e) {
             throw new RuntimeException(e);

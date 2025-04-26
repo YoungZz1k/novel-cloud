@@ -2,6 +2,7 @@ package com.youngzz1k.novel.user.service;
 
 
 import com.youngzz1k.novel.common.resp.RestResp;
+import com.youngzz1k.novel.user.dao.entity.UserReadHistory;
 import com.youngzz1k.novel.user.dto.req.UserCommentsReqDto;
 import com.youngzz1k.novel.user.dto.req.UserInfoUptReqDto;
 import com.youngzz1k.novel.user.dto.req.UserLoginReqDto;
@@ -94,4 +95,12 @@ public interface UserService {
      * @return
      */
     List<UserCommentsReqDto> listComments(Long userId,Integer pageNum, Integer pageSize);
+
+    /**
+     *
+     * @param userId
+     * @param bookId
+     * @return
+     */
+    UserReadHistory getReadHistory(Long userId, Long bookId);
 }

@@ -1,6 +1,7 @@
 package com.youngzz1k.novel.user.service.impl;
 
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youngzz1k.novel.book.dto.resp.BookInfoRespDto;
 import com.youngzz1k.novel.common.auth.JwtUtils;
@@ -10,14 +11,8 @@ import com.youngzz1k.novel.common.constant.ErrorCodeEnum;
 import com.youngzz1k.novel.common.constant.SystemConfigConsts;
 import com.youngzz1k.novel.common.resp.RestResp;
 import com.youngzz1k.novel.config.exception.BusinessException;
-import com.youngzz1k.novel.user.dao.entity.UserBookshelf;
-import com.youngzz1k.novel.user.dao.entity.UserComment;
-import com.youngzz1k.novel.user.dao.entity.UserFeedback;
-import com.youngzz1k.novel.user.dao.entity.UserInfo;
-import com.youngzz1k.novel.user.dao.mapper.UserBookshelfMapper;
-import com.youngzz1k.novel.user.dao.mapper.UserCommentMapper;
-import com.youngzz1k.novel.user.dao.mapper.UserFeedbackMapper;
-import com.youngzz1k.novel.user.dao.mapper.UserInfoMapper;
+import com.youngzz1k.novel.user.dao.entity.*;
+import com.youngzz1k.novel.user.dao.mapper.*;
 import com.youngzz1k.novel.user.dto.req.UserCommentsReqDto;
 import com.youngzz1k.novel.user.dto.req.UserInfoUptReqDto;
 import com.youngzz1k.novel.user.dto.req.UserLoginReqDto;
@@ -60,6 +55,8 @@ public class UserServiceImpl implements UserService {
     private final UserCommentMapper userCommentMapper;
 
     private final BookFeignManager bookFeignManager;
+
+    private final UserReadHistoryMapper userReadHistoryMapper;
 
     @Override
     public RestResp<UserRegisterRespDto> register(UserRegisterReqDto dto) {
@@ -221,5 +218,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return res;
+    }
+
+    @Override
+    public UserReadHistory getReadHistory(Long userId, Long bookId) {
+        if (userId == null) {
+            return null;
+        }
+        return userReadHistoryMapper.selectOne(new LambdaQueryWrapper<UserReadHistory>()
+                .eq(UserReadHistory::getUserId, userId)
+                .eq(UserReadHistory::getBookId, bookId)
+        );
     }
 }

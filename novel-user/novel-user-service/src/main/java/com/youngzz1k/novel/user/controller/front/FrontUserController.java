@@ -5,6 +5,7 @@ import com.youngzz1k.novel.common.auth.UserHolder;
 import com.youngzz1k.novel.common.constant.ApiRouterConsts;
 import com.youngzz1k.novel.common.constant.SystemConfigConsts;
 import com.youngzz1k.novel.common.resp.RestResp;
+import com.youngzz1k.novel.user.dao.entity.UserReadHistory;
 import com.youngzz1k.novel.user.dto.req.UserCommentsReqDto;
 import com.youngzz1k.novel.user.dto.req.UserInfoUptReqDto;
 import com.youngzz1k.novel.user.dto.req.UserLoginReqDto;
@@ -144,6 +145,12 @@ public class FrontUserController {
     @GetMapping("/comments")
     public RestResp<List<UserCommentsReqDto>> listComments(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
         return RestResp.ok(userService.listComments(UserHolder.getUserId(),pageNum,pageSize));
+    }
+
+    @Operation(summary = "用户阅读历史查看")
+    @GetMapping("/readHistory")
+    public RestResp<UserReadHistory> getReadHistory(@RequestParam Long bookId) {
+        return RestResp.ok(userService.getReadHistory(UserHolder.getUserId(), bookId));
     }
 
 }

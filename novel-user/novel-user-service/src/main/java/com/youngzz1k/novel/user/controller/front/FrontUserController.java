@@ -148,9 +148,15 @@ public class FrontUserController {
     }
 
     @Operation(summary = "用户阅读历史查看")
-    @GetMapping("/readHistory")
-    public RestResp<UserReadHistory> getReadHistory(@RequestParam Long bookId) {
+    @GetMapping("/readHistory/{bookId}")
+    public RestResp<UserReadHistory> getReadHistory(@PathVariable Long bookId) {
         return RestResp.ok(userService.getReadHistory(UserHolder.getUserId(), bookId));
+    }
+
+    @Operation(summary = "用户阅读历史保存")
+    @PostMapping("/saveReadHistory")
+    public RestResp<Boolean> saveReadHistory(@RequestBody UserReadHistory request) {
+        return RestResp.ok(userService.saveReadHistory(request));
     }
 
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youngzz1k.novel.book.dto.resp.BookInfoRespDto;
 import com.youngzz1k.novel.common.auth.JwtUtils;
+import com.youngzz1k.novel.common.auth.UserHolder;
 import com.youngzz1k.novel.common.constant.CommonConsts;
 import com.youngzz1k.novel.common.constant.DatabaseConsts;
 import com.youngzz1k.novel.common.constant.ErrorCodeEnum;
@@ -30,6 +31,7 @@ import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -229,5 +231,23 @@ public class UserServiceImpl implements UserService {
                 .eq(UserReadHistory::getUserId, userId)
                 .eq(UserReadHistory::getBookId, bookId)
         );
+    }
+
+    @Override
+    public Boolean saveReadHistory(UserReadHistory request) {
+        if (UserHolder.getUserId() == null) {
+            return Boolean.FALSE;
+        }
+        UserReadHistory readHistory = this.getReadHistory(UserHolder.getUserId(), request.getBookId());
+        if (readHistory == null) {
+            request.setUserId(UserHolder.getUserId());
+            request.setCreateTime(LocalDateTime.now());
+            request.setUpdateTime(LocalDateTime.now());
+            return userReadHistoryMapper.insert(request) > 0;
+        } else {
+            readHistory.setPreContentId(request.getPreContentId());
+            readHistory.setUpdateTime(LocalDateTime.now());
+            return userReadHistoryMapper.updateById(readHistory) > 0;
+        }
     }
 }

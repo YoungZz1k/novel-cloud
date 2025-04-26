@@ -103,4 +103,6 @@ public interface UserService {
      * @return
      */
     UserReadHistory getReadHistory(Long userId, Long bookId);
+
+    Boolean saveReadHistory(UserReadHistory request);
 }

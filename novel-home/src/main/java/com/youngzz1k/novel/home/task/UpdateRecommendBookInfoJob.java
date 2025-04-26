@@ -27,7 +27,7 @@ public class UpdateRecommendBookInfoJob {
     private final HomeBookCacheManager homeBookCacheManager;
 
     @XxlJob("updateRecommendBookInfo")
-    private ReturnT<String> updateRecommendBookInfo() {
+    public ReturnT<String> updateRecommendBookInfo() {
         try {
             // 先查询出所有的推荐数据
             List<HomeBook> homeBooks = homeBookMapper.selectList(new LambdaQueryWrapper<HomeBook>().orderByAsc(HomeBook::getId));

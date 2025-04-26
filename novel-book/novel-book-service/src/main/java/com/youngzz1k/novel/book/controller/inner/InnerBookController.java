@@ -55,8 +55,8 @@ public class InnerBookController {
      */
     @Operation(summary = "查询最新推荐小说")
     @PostMapping("listBookByHot")
-    RestResp<List<BookInfoRespDto>> listBookByHot(@RequestParam Integer size) {
-        return bookService.listBookByHot(size);
+    RestResp<List<BookInfoRespDto>> listBookByHot() {
+        return bookService.listBookByHot();
     }
 
     /**

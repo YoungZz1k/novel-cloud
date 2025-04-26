@@ -198,5 +198,5 @@ public interface BookService {
 
     BookEsRespDto getEsBookById(Long bookId);
 
-    RestResp<List<BookInfoRespDto>> listBookByHot(Integer size);
+    RestResp<List<BookInfoRespDto>> listBookByHot();
 }

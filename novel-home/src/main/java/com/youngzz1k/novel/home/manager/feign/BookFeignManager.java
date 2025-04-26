@@ -32,7 +32,7 @@ public class BookFeignManager {
     }
 
     public List<BookInfoRespDto> listBookByHot(Integer dataSize){
-        RestResp<List<BookInfoRespDto>> resp = bookFeign.listBookByHot(dataSize);
+        RestResp<List<BookInfoRespDto>> resp = bookFeign.listBookByHot();
         if(Objects.equals(ErrorCodeEnum.OK.getCode(),resp.getCode())){
             return resp.getData();
         }
